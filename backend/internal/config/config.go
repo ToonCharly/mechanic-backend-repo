@@ -45,10 +45,13 @@ func Load() *Config {
 	dbPassword := getEnv("DB_PASSWORD", "admin123")
 	dbName := getEnv("DB_NAME", "mechanic_db")
 
-	dsn := fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		dbHost, dbPort, dbUser, dbPassword, dbName,
-	)
+	dsn := getEnv("DATABASE_URL", "")
+	if dsn == "" {
+		dsn = fmt.Sprintf(
+			"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+			dbHost, dbPort, dbUser, dbPassword, dbName,
+		)
+	}
 
 	jwtExpire, err := strconv.Atoi(getEnv("JWT_EXPIRE_HOURS", "72"))
 	if err != nil {
@@ -71,7 +74,7 @@ func Load() *Config {
 		},
 		App: AppConfig{
 			Environment: getEnv("APP_ENV", "development"),
-			Port:        getEnv("APP_PORT", "8080"),
+			Port:        getEnv("PORT", "8080"),
 			FrontendURL: getEnv("FRONTEND_URL", "http://localhost:3000"),
 		},
 	}
