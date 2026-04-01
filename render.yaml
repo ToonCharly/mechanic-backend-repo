@@ -3,20 +3,14 @@ databases:
     databaseName: mechanic_db
     user: mechanic_user
     plan: free
-    version: "13"
 
 services:
   - type: web
     name: mechanic-backend
     env: go
     plan: free
-    repo: https://github.com/ToonCharly/mechanic-backend-repo
-    branch: main
-    buildFilter:
-      paths:
-      - backend/**
-    build:
-      command: "go build -o main ./backend/cmd/api"
+    rootDir: backend
+    buildCommand: "go build -o main ./cmd/api"
     startCommand: "./main"
     envVars:
       - key: DATABASE_URL
@@ -24,6 +18,7 @@ services:
           name: mechanic-db
           property: connectionString
       - key: PORT
-        value: 10000
+        value: "10000"
       - key: GIN_MODE
-        value: release
+        value: "release"
+
