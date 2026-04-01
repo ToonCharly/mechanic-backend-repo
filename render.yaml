@@ -1,3 +1,10 @@
+databases:
+  - name: mechanic-db
+    databaseName: mechanic_db
+    user: mechanic_user
+    plan: free
+    version: "13"
+
 services:
   - type: web
     name: mechanic-backend
@@ -20,10 +27,3 @@ services:
         value: 10000
       - key: GIN_MODE
         value: release
-
-  - type: psql
-    name: mechanic-db
-    plan: free
-    databaseName: mechanic_db
-    user: mechanic_user
-    version: "13"
